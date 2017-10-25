@@ -52,7 +52,7 @@ export default {
       var self = this
       var params = new URLSearchParams()
       params.append('mainMenu', index)
-      if (subMenus === null) {
+      if (subMenus === null || subMenus === '') {
         this.axios({
           method: 'post',
           url: 'http://localhost:8080/ShiroTest/index/getSubMenu',

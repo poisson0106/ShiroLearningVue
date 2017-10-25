@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+// import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Header from '@/components/frame/Header'
 import Navi from '@/components/frame/Navi'
+import Index from '@/components/content/Index'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -24,8 +25,10 @@ export default new Router({
       components: {
         header: Header,
         navi: Navi,
-        content: HelloWorld
+        content: Index
       }
     }
   ]
 })
+
+export default router

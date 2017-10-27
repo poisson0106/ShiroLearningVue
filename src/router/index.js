@@ -31,4 +31,17 @@ const router = new Router({
   ]
 })
 
+router.beforeEach((to, from, next) => {
+  var authcAddr = ['product', 'index', 'druid', 'admin']
+  var isNeedAuth = false
+
+  authcAddr.forEach(function (element) {
+    if (to.path.indexOf(element) > 0) isNeedAuth = true
+  }, this)
+  if (isNeedAuth) {
+    if (sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== '') next()
+    else next('/')
+  } else next()
+})
+
 export default router

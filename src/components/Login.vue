@@ -127,6 +127,8 @@ export default {
           data: params
         })
         .then(function (response) {
+          var token = JSON.stringify(response.data)
+          sessionStorage.setItem('token', token)
           self.$router.push('/index')
         })
         .catch(function (error) {

@@ -10,7 +10,7 @@
       </div>
     </div> -->
     <el-container>
-      <router-view name="header"/>
+      <el-header class="header"><router-view name="header"/></el-header>
       <el-main>
         <el-row :gutter="20">
           <router-view name="navi" />
@@ -20,6 +20,16 @@
     </el-container>
   </div>
 </template>
+
+<style>
+.header{
+  margin-left: -8px;
+  margin-right: -8px;
+  padding-left: 0;
+  padding-right: 0;
+}
+</style>
+
 
 <script>
 export default {

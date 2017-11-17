@@ -28,6 +28,10 @@
   padding-left: 0;
   padding-right: 0;
 }
+
+.el-loading-parent--hidden {
+    overflow: inherit !important;
+}
 </style>
 
 

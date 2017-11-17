@@ -33,6 +33,6 @@ export default {
 <style>
 body{
   background-color: #ffffff;
-  margin-top: 0
+  margin-top: 0;
 }
 </style>

@@ -4,7 +4,7 @@
     default-active="2"
     class="el-menu-vertical-demo" 
     v-loading="loadMenu" 
-    unique-opened="true"  
+    :unique-opened="true" 
     @open="handleOpen">
     <!-- <el-submenu index="1">
       <template slot="title">
@@ -32,11 +32,11 @@
       <i class="el-icon-setting"></i>
       <span slot="title">导航三</span>
     </el-menu-item> -->
-    <el-submenu v-for="menu in topMenus" :key = "menu.id" :index="menu.id">
+    <el-submenu v-for="menu in topMenus" :key = "menu.id" :index="menu.id.toString()">
       <template slot="title">
         <span>{{menu.name}}</span>
       </template>
-      <el-menu-item v-for="item in items" :key="item.id" :index="item.id">{{item.name}}</el-menu-item>
+      <el-menu-item v-for="item in items" :key="item.id" :index="item.id.toString()">{{item.name}}</el-menu-item>
     </el-submenu>
   </el-menu>
   </el-col>

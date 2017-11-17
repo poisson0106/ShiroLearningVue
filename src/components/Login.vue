@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div slot="header"><h4>Login</h4></div>
       <div>
-        <el-form ref="loginform" :model="loginform" label-width="120px" :rules="rules">
+        <el-form ref="loginform" :model="loginform" label-width="120px" :rules="rules" status-icon>
           <el-form-item label="User Name:" prop="username">
             <el-autocomplete
               popper-class="my-autocomplete"
@@ -29,21 +29,77 @@
             <el-button type="primary"
               @click="onSubmit('loginform')"
               v-loading.fullscreen.lock="isLoading">Login</el-button>
-            <el-button @click="resetForm('loginform')">Cancel</el-button>
+            <!-- <el-button @click="resetForm('loginform')">Cancel</el-button> -->
+            <el-button @click="dialogFormVisible = true">Register</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
+
+    <!-- Registation part -->
+    <el-dialog title="Registation" :visible.sync="dialogFormVisible">
+      <el-form :model="regform" ref="regform" :rules="rules" status-icon>
+        <el-form-item label="User Name:" :label-width="formLabelWidth" prop="rusername">
+          <el-autocomplete
+              popper-class="my-autocomplete"
+              v-model="regform.rusername"
+              :fetch-suggestions="querySearch"
+              :trigger-on-focus="false"
+              placeholder="User Name"
+              @select="handleRegSelect"
+              style="width:100%">
+              <template slot-scope="props">
+                <div class="name">{{ props.item }}</div>
+                <!-- <span class="addr">{{ props.item.address }}</span> -->
+              </template>
+            </el-autocomplete>
+        </el-form-item>
+        <el-form-item label="Password:" :label-width="formLabelWidth" prop="rpassword">
+          <el-input 
+            type="password" 
+            v-model="regform.rpassword" 
+            auto-complete="off" 
+            placeholder="Password"></el-input>
+        </el-form-item>
+        <el-form-item label="Repeat Password:" :label-width="formLabelWidth" prop="cpassword">
+          <el-input 
+            type="password" 
+            v-model="regform.cpassword" 
+            auto-complete="off"
+            placeholder="Repeat password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="regSubmit('regform')">Submit</el-button>
+        <el-button @click="resetForm('regform')">Reset</el-button>
+      </div>
+    </el-dialog>
+
   </el-col>
 </template>
 
 <script>
 export default {
   data: function () {
+    var passwordCheck = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('Please input the password again'))
+      } else if (value !== this.regform.rpassword) {
+        callback(new Error('The two passwords are not same!'))
+      } else {
+        callback()
+      }
+    }
+
     return {
       loginform: {
         username: '',
         password: ''
+      },
+      regform: {
+        rusername: '',
+        rpassword: '',
+        cpassword: ''
       },
       rules: {
         username: [
@@ -51,10 +107,22 @@ export default {
         ],
         password: [
           { required: true, message: 'Please input password', trigger: 'blur' }
+        ],
+        rusername: [
+          { type: 'email', required: true, message: 'Please input email address', trigger: 'blur' }
+        ],
+        rpassword: [
+          { required: true, message: 'Please input password', trigger: 'blur' }
+        ],
+        cpassword: [
+          { validator: passwordCheck, trigger: 'blur' }
         ]
+
       },
       addr: ['@gmail.com', '@sina.com', '@163.com', '@outlook.com', '@qq.com'],
-      isLoading: false
+      isLoading: false,
+      dialogFormVisible: false,
+      formLabelWidth: '160px'
     }
   },
   methods: {
@@ -115,9 +183,25 @@ export default {
     handleSelect: function (item) {
       this.loginform.username = item
     },
+    handleRegSelect: function (item) {
+      this.regform.rusername = item
+    },
+    regSubmit: function (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var params = new URLSearchParams()
+          params.append('username', this.regform.rusername)
+          params.append('password', this.regform.rpassword)
+        } else {
+          this.$message.error('submit error')
+          return false
+        }
+      })
+    },
     resetForm: function (formName) {
       this.$refs[formName].resetFields()
     }
+
   }
 }
 </script>

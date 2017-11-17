@@ -4,6 +4,7 @@ import Router from 'vue-router'
 // import Login from '@/components/Login'
 import HeaderE from '@/components/frame/HeaderE'
 import NaviE from '@/components/frame/NaviE'
+import IndexE from '@/components/content/IndexE'
 // import Navi from '@/components/frame/Navi'
 // import Index from '@/components/content/Index'
 import Login from '@/components/Login'
@@ -27,7 +28,7 @@ const router = new Router({
       components: {
         header: HeaderE,
         navi: NaviE,
-        content: ''
+        content: IndexE
       }
     }
   ]

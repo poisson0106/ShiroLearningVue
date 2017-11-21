@@ -144,6 +144,7 @@ export default {
             })
             .then(function (response) {
               self.isLoading = false
+              response.data.password = ''
               var token = JSON.stringify(response.data)
               sessionStorage.setItem('token', token)
               self.$router.push('/index')

@@ -1,12 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import HelloWorld from '@/components/HelloWorld'
-// import Login from '@/components/Login'
-import HeaderE from '@/components/frame/HeaderE'
-import NaviE from '@/components/frame/NaviE'
-import IndexE from '@/components/content/IndexE'
-// import Navi from '@/components/frame/Navi'
-// import Index from '@/components/content/Index'
+import Header from '@/components/frame/Header'
+import Navi from '@/components/frame/Navi'
+import Index from '@/components/content/Index'
 import Login from '@/components/Login'
 
 Vue.use(Router)
@@ -26,9 +22,9 @@ const router = new Router({
       path: '/index',
       name: 'Index',
       components: {
-        header: HeaderE,
-        navi: NaviE,
-        content: IndexE
+        header: Header,
+        navi: Navi,
+        content: Index
       }
     }
   ]

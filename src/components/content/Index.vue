@@ -10,15 +10,8 @@
         <el-col :span="24">{{prod.description }}</el-col>
       </el-row>
       <el-row type="flex" justify="end">
-        <el-button plain>Detail</el-button>
+        <el-button plain @click="handleDetail(prod.id)">Detail</el-button>
       </el-row>
-      <!-- <div style="padding: 5px;">
-        <span>{{prod.name }}</span>
-			  <span>{{prod.description }}</span>
-        <div class="bottom clearfix">
-			    <el-button plain>Detail</el-button>
-        </div>
-      </div> -->
     </el-card>
   </el-col>
 </el-col>
@@ -43,6 +36,11 @@ export default {
     .catch(function (error) {
       console.error(error)
     })
+  },
+  methods: {
+    handleDetail: function (id) {
+      this.$router.push('product/' + id)
+    }
   }
 }
 </script>

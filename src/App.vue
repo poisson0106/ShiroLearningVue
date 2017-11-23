@@ -15,6 +15,7 @@
         <el-row :gutter="20">
           <router-view name="navi" />
           <router-view name="content"/>
+          <router-view name="history" />
         </el-row>
       </el-main>
     </el-container>

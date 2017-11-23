@@ -4,6 +4,8 @@ import Header from '@/components/frame/Header'
 import Navi from '@/components/frame/Navi'
 import Index from '@/components/content/Index'
 import Login from '@/components/Login'
+import Detail from '@/components/content/Detail'
+import History from '@/components/frame/History'
 
 Vue.use(Router)
 
@@ -13,8 +15,6 @@ const router = new Router({
       path: '/',
       name: 'Login',
       components: {
-        header: '',
-        navi: '',
         content: Login
       }
     },
@@ -25,6 +25,15 @@ const router = new Router({
         header: Header,
         navi: Navi,
         content: Index
+      }
+    },
+    {
+      path: '/product/:id',
+      name: 'Product',
+      components: {
+        header: Header,
+        content: Detail,
+        history: History
       }
     }
   ]

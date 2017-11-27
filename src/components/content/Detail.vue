@@ -9,7 +9,22 @@
         </el-breadcrumb>
       </el-col>
     
-      <el-col :span="10"><img src="../../assets/products/example.png" width="100%"></el-col>
+      <el-col :span="10">
+        <el-carousel indicator-position="none">
+          <el-carousel-item>
+            <img src="../../assets/products/example.png" width="100%">
+          </el-carousel-item>
+          <el-carousel-item>
+            <img src="../../assets/products/example.png" width="100%">
+          </el-carousel-item>
+          <el-carousel-item>
+            <img src="../../assets/products/example.png" width="100%">
+          </el-carousel-item>
+          <el-carousel-item>
+            <img src="../../assets/products/example.png" width="100%">
+          </el-carousel-item>
+        </el-carousel>
+      </el-col>
       <el-col :span="14">
         <h2>{{product.name}}<small>({{readcount}} readed)</small></h2>
         <el-col :span="24" style="padding-left:0px">
@@ -60,6 +75,8 @@
 </template>
 
 <script>
+import bus from '@/router/bus.js'
+
 export default {
   data: function () {
     return {
@@ -74,7 +91,6 @@ export default {
   },
   beforeCreate: function () {
     var self = this
-    console.log(self.$route.params.id)
     this.axios({
       method: 'get',
       url: 'http://localhost:8080/ShiroTest/product/' + self.$route.params.id
@@ -84,6 +100,7 @@ export default {
       self.product = data.pdct
       self.tags = data.pdct.tags.split(',')
       self.readcount = data.browseTimes
+      bus.$emit('historyupdate', data.recent)
     })
     .catch(function (error) {
       console.error(error)
@@ -106,7 +123,7 @@ export default {
           comments.forEach(element => {
             element.commentDate = new Date(element.commentDate).toDateString()
           })
-          self.comments = comments
+          self.comments = customElements
         })
         .catch(function (error) {
           console.error(error)

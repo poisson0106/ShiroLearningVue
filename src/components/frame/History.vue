@@ -8,11 +8,12 @@
     height="250"
     empty-text="Not Available"
     style="width: 100%"
-    cell-click="handleCellClick">
+    @row-click="handleRowClick">
       <el-table-column
         prop="name"
         label="Recent History"
-        width="200">
+        width="200"
+        style="cursor:pointer">
       </el-table-column>
     </el-table>
   </el-card>
@@ -36,9 +37,10 @@ export default {
     })
   },
   methods: {
-    handleCellClick: function () {
-      console.log('aaa')
-      console.log('bbb')
+    handleRowClick: function (row) {
+      console.log('In method')
+      var id = row.id
+      this.$router.push({name: 'Product', params: {id}})
     }
   }
 }

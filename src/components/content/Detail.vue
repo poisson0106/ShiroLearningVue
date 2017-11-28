@@ -106,6 +106,25 @@ export default {
       console.error(error)
     })
   },
+  watch: {
+    '$route': function () {
+      var self = this
+      this.axios({
+        method: 'get',
+        url: 'http://localhost:8080/ShiroTest/product/' + self.$route.params.id
+      })
+      .then(function (response) {
+        var data = response.data
+        self.product = data.pdct
+        self.tags = data.pdct.tags.split(',')
+        self.readcount = data.browseTimes
+        bus.$emit('historyupdate', data.recent)
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+    }
+  },
   methods: {
     handleTabClick: function (tab) {
       if (tab.name === 'comments') {

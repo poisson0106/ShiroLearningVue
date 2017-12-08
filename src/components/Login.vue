@@ -144,9 +144,12 @@ export default {
             })
             .then(function (response) {
               self.isLoading = false
-              response.data.password = ''
-              var token = JSON.stringify(response.data)
+              var tokenraw = response.data.token
+              tokenraw.password = ''
+              var token = JSON.stringify(tokenraw)
               sessionStorage.setItem('token', token)
+              // sessionStorage.setItem('jsessionid', response.data.jSessionId)
+              sessionStorage.setItem('lastTouch', new Date())
               self.$router.push('/index')
             })
             .catch(function (error) {

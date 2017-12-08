@@ -5,7 +5,8 @@
     class="el-menu-vertical-demo" 
     v-loading="loadMenu" 
     :unique-opened="true" 
-    @open="handleOpen">
+    @open="handleOpen"
+    v-if = "(topMenus !== undefined && topMenus !== null) || !loadMenu">
     <!-- <el-submenu index="1">
       <template slot="title">
         <i class="el-icon-location"></i>

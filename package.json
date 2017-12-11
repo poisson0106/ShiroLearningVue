@@ -11,9 +11,11 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "vue": "^2.4.2",
+    "vue": "^2.5.9",
     "vue-router": "^2.7.0",
-    "axios": "0.16.2"
+    "vuex": "^3.0.1",
+    "axios": "0.16.2",
+    "sockjs-client": "^1.1.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -48,7 +50,6 @@
     "webpack-bundle-analyzer": "^2.9.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
-    "sockjs-client": "^1.1.4",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
@@ -56,7 +57,7 @@
     "url-loader": "^0.5.8",
     "vue-loader": "^13.0.4",
     "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.4.2",
+    "vue-template-compiler": "^2.5.9",
     "portfinder": "^1.0.13",
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",

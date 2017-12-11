@@ -2,7 +2,7 @@
 <el-col :span="5">
   <el-card 
     class="box-card"
-    v-loading="historyloading">
+    v-if="isShow">
     <el-table
     :data="history"
     height="250"
@@ -21,20 +21,14 @@
 </template>
 
 <script>
-import bus from '@/router/bus.js'
-
 export default {
-  data: function () {
-    return {
-      history: [],
-      historyloading: true
+  computed: {
+    history: function () {
+      return this.$store.state.history
+    },
+    isShow: function () {
+      return this.$store.state.history !== undefined
     }
-  },
-  mounted: function () {
-    bus.$on('historyupdate', (recent) => {
-      this.history = recent
-      this.historyloading = false
-    })
   },
   methods: {
     handleRowClick: function (row) {

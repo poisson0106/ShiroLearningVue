@@ -47,7 +47,7 @@ export default {
     var self = this
     this.intervalId = setInterval(() => {
       var current = new Date()
-      var lastTouch = new Date(sessionStorage.getItem('lastTouch'))
+      var lastTouch = new Date(self.$store.state.lastTouch)
       console.log('Current time: ' + current.getTime())
       console.log('Last touch time: ' + lastTouch.getTime())
       var lasted = parseInt(current.getTime() / 60000) - parseInt(lastTouch.getTime() / 60000)

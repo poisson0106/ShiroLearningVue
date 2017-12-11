@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 import Header from '@/components/frame/Header'
 import Navi from '@/components/frame/Navi'
 import Index from '@/components/content/Index'
@@ -42,6 +43,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   var authcAddr = ['product', 'index', 'druid', 'admin']
   var isNeedAuth = false
+  store.commit('updateTouchTime')
 
   authcAddr.forEach(function (element) {
     if (to.path.indexOf(element) > 0) isNeedAuth = true

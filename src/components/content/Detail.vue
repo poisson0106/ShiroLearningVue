@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import bus from '@/router/bus.js'
+// import bus from '@/router/bus.js'
 
 export default {
   data: function () {
@@ -102,7 +102,10 @@ export default {
       self.product = data.pdct
       self.tags = data.pdct.tags.split(',')
       self.readcount = data.browseTimes
-      bus.$emit('historyupdate', data.recent)
+      // bus.$emit('historyupdate', data.recent)
+      self.$store.commit('updateHistory', {
+        history: data.recent
+      })
       self.loadDetail = false
     })
     .catch(function (error) {
@@ -122,7 +125,10 @@ export default {
         self.product = data.pdct
         self.tags = data.pdct.tags.split(',')
         self.readcount = data.browseTimes
-        bus.$emit('historyupdate', data.recent)
+        // bus.$emit('historyupdate', data.recent)
+        self.$store.commit('updateHistory', {
+          history: data.recent
+        })
       })
       .catch(function (error) {
         console.error(error)

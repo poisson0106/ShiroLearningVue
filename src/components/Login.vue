@@ -37,7 +37,9 @@
     </el-card>
 
     <!-- Registation part -->
-    <el-dialog title="Registation" :visible.sync="dialogFormVisible">
+    <el-dialog title="Registation" 
+              :visible.sync="dialogFormVisible"
+              :close-on-click-modal="false">
       <el-form :model="regform" ref="regform" :rules="rules" status-icon>
         <el-form-item label="User Name:" :label-width="formLabelWidth" prop="rusername">
           <el-autocomplete
@@ -149,7 +151,6 @@ export default {
               var token = JSON.stringify(tokenraw)
               sessionStorage.setItem('token', token)
               // sessionStorage.setItem('jsessionid', response.data.jSessionId)
-              sessionStorage.setItem('lastTouch', new Date())
               self.$router.push('/index')
             })
             .catch(function (error) {

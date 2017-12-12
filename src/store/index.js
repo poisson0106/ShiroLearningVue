@@ -6,7 +6,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     lastTouch: '',
-    history: []
+    history: [],
+    token: []
   },
   mutations: {
     updateTouchTime (state) {
@@ -14,6 +15,9 @@ const store = new Vuex.Store({
     },
     updateHistory (state, payload) {
       state.history = payload.history
+    },
+    updateToken (state, payload) {
+      state.token = payload.token
     }
   }
 })

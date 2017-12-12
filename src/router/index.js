@@ -49,7 +49,8 @@ router.beforeEach((to, from, next) => {
     if (to.path.indexOf(element) > 0) isNeedAuth = true
   }, this)
   if (isNeedAuth) {
-    if (sessionStorage.getItem('token') !== null && sessionStorage.getItem('token') !== '') next()
+    var token = store.state.token
+    if (token !== null && token !== undefined) next()
     else next('/')
   } else next()
 })

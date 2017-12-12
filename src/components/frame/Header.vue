@@ -1,4 +1,5 @@
 <template>
+<div>
   <el-menu 
     class="el-menu-demo" 
     mode="horizontal" 
@@ -13,6 +14,20 @@
       <el-menu-item index="logout">Logout</el-menu-item>
     </el-submenu>
   </el-menu>
+
+  <el-dialog
+    title="Expire"
+    :visible.sync="showExpire"
+    :close-on-click-modal = "false"
+    :close-on-press-escape = "false"
+    :show-close = "false"
+    width="30%">
+    <span>Your session has expired. Please re-login to continue</span>
+    <span slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="relogin">Accept</el-button>
+    </span>
+  </el-dialog>
+</div>
 </template>
 
 <script>
@@ -22,13 +37,13 @@ export default {
   data () {
     return {
       activeIndex: '1',
-      intervalId: 0
+      intervalId: 0,
+      showExpire: false
     }
   },
   computed: {
     username: function () {
-      var session = JSON.parse(sessionStorage.getItem('token'))
-      return session.username
+      return this.$store.state.token.username
     }
   },
   created: function () {
@@ -52,20 +67,26 @@ export default {
       console.log('Last touch time: ' + lastTouch.getTime())
       var lasted = parseInt(current.getTime() / 60000) - parseInt(lastTouch.getTime() / 60000)
       console.log('Lasted: ' + lasted)
-      if (lasted === 3) {
+      if (lasted >= 3 && lasted < 5) {
         self.$notify({
           title: 'Warning!',
           message: 'Your session will be expired soon. If you are no longer to use it. Please log out.',
           type: 'warning',
-          duration: 0
+          duration: 5000
         })
-      } else console.log('On checking')
+      } else if (lasted >= 5) {
+        self.$store.commit('updateToken', {token: []})
+        self.showExpire = true
+      }
     }, 60000)
   },
   methods: {
     handleSelect (key, keyPath) {
       console.log('Key: ' + key)
       console.log('Key path: ' + keyPath)
+    },
+    relogin () {
+      this.$router.push('/')
     }
   },
   beforeDestroy: function () {

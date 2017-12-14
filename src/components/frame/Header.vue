@@ -3,15 +3,13 @@
   <el-menu 
     class="el-menu-demo" 
     mode="horizontal" 
-    @select="handleSelect"
-    background-color="#f8f8f8" 
-    :router="true">
-    <el-menu-item index="/index">System</el-menu-item>
+    background-color="#f8f8f8" >
+    <el-menu-item index="/index" @click="handleNaviTarget('/index')">System</el-menu-item>
     <el-submenu index="2" style="float:right">
       <template slot="title">{{username}}</template>
-      <el-menu-item index="admin/profile">Profile Setting</el-menu-item>
-      <el-menu-item index="admin/uploadInit">Import Products</el-menu-item>
-      <el-menu-item index="logout">Logout</el-menu-item>
+      <el-menu-item index="/admin/profile" @click="handleNaviTarget('/admin/profile')">Profile Setting</el-menu-item>
+      <el-menu-item index="/admin/uploadInit" @click="handleNaviTarget('/admin/uploadInit')">Import Products</el-menu-item>
+      <el-menu-item index="/logout" @click="handleNaviTarget('/logout')">Logout</el-menu-item>
     </el-submenu>
   </el-menu>
 
@@ -81,12 +79,25 @@ export default {
     }, 60000)
   },
   methods: {
-    handleSelect (key, keyPath) {
-      console.log('Key: ' + key)
-      console.log('Key path: ' + keyPath)
-    },
     relogin () {
       this.$router.push('/')
+    },
+    handleNaviTarget (target) {
+      var self = this
+      if (target !== '/logout') this.$router.push(target)
+      else {
+        this.axios({
+          method: 'get',
+          url: 'http://localhost:8080/ShiroTest/auth/logout'
+        })
+        .then(function () {
+          self.$store.state.token = []
+          self.$router.push('/')
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
+      }
     }
   },
   beforeDestroy: function () {

@@ -6,7 +6,7 @@
     @select="handleSelect"
     background-color="#f8f8f8" 
     :router="true">
-    <el-menu-item index="1">System</el-menu-item>
+    <el-menu-item index="/index">System</el-menu-item>
     <el-submenu index="2" style="float:right">
       <template slot="title">{{username}}</template>
       <el-menu-item index="admin/profile">Profile Setting</el-menu-item>

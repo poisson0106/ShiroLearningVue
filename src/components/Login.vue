@@ -148,8 +148,6 @@ export default {
               self.isLoading = false
               var tokenraw = response.data.token
               tokenraw.password = ''
-              // var token = JSON.stringify(tokenraw)
-              // sessionStorage.setItem('token', token)
               self.$store.commit('updateToken', {token: tokenraw})
               // sessionStorage.setItem('jsessionid', response.data.jSessionId)
               self.$router.push('/index')

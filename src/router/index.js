@@ -7,6 +7,7 @@ import Index from '@/components/content/Index'
 import Login from '@/components/Login'
 import Detail from '@/components/content/Detail'
 import History from '@/components/frame/History'
+import Profile from '@/components/content/Profile'
 
 Vue.use(Router)
 
@@ -35,6 +36,14 @@ const router = new Router({
         header: Header,
         content: Detail,
         history: History
+      }
+    },
+    {
+      path: '/admin/profile',
+      name: 'Profile',
+      components: {
+        header: Header,
+        content: Profile
       }
     }
   ]

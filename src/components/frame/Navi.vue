@@ -1,21 +1,28 @@
 <template>
-<el-col :span="5">
-  <el-menu
-    default-active="2"
-    class="el-menu-vertical-demo" 
-    v-loading="loadMenu" 
-    :unique-opened="true" 
-    @open="handleOpen"
-    v-if = "(topMenus !== undefined && topMenus !== null) || !loadMenu">
-    <el-submenu v-for="menu in topMenus" :key = "menu.id" :index="menu.id.toString()">
-      <template slot="title">
-        <span>{{menu.name}}</span>
-      </template>
-      <el-menu-item v-for="item in items" :key="item.id" :index="item.id.toString()">{{item.name}}</el-menu-item>
-    </el-submenu>
-  </el-menu>
+  <el-col :span="5">
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo" 
+      v-loading="loadMenu" 
+      :unique-opened="true" 
+      @open="handleOpen"
+      v-if = "(topMenus !== undefined && topMenus !== null) || !loadMenu">
+      <el-submenu 
+        v-for="menu in topMenus" 
+        :key = "menu.id" 
+        :index="menu.id.toString()">
+        <template slot="title">
+          <span>{{ menu.name }}</span>
+        </template>
+        <el-menu-item 
+          v-for="item in items" 
+          :key="item.id" 
+          :index="item.id.toString()">{{ item.name }}</el-menu-item>
+      </el-submenu>
+    </el-menu>
   </el-col>
 </template>
+
 
 <script>
 export default {

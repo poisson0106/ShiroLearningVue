@@ -8,6 +8,7 @@ import Login from '@/components/Login'
 import Detail from '@/components/content/Detail'
 import History from '@/components/frame/History'
 import Profile from '@/components/content/Profile'
+import Import from '@/components/content/Import'
 
 Vue.use(Router)
 
@@ -44,6 +45,14 @@ const router = new Router({
       components: {
         header: Header,
         content: Profile
+      }
+    },
+    {
+      path: '/admin/import',
+      name: 'Import',
+      components: {
+        header: Header,
+        content: Import
       }
     }
   ]

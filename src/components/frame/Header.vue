@@ -8,7 +8,7 @@
     <el-submenu index="2" style="float:right">
       <template slot="title">{{username}}</template>
       <el-menu-item index="/admin/profile" @click="handleNaviTarget('/admin/profile')">Profile Setting</el-menu-item>
-      <el-menu-item index="/admin/uploadInit" @click="handleNaviTarget('/admin/uploadInit')">Import Products</el-menu-item>
+      <el-menu-item index="/admin/uploadInit" @click="handleNaviTarget('/admin/import')">Import Products</el-menu-item>
       <el-menu-item index="/logout" @click="handleNaviTarget('/logout')">Logout</el-menu-item>
     </el-submenu>
   </el-menu>
@@ -80,7 +80,18 @@ export default {
   },
   methods: {
     relogin () {
-      this.$router.push('/')
+      var self = this
+      this.axios({
+        method: 'get',
+        url: 'http://localhost:8080/ShiroTest/auth/logout'
+      })
+      .then(function () {
+        self.$store.state.token = []
+        self.$router.push('/')
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
     },
     handleNaviTarget (target) {
       var self = this

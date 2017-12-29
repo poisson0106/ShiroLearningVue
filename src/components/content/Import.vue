@@ -5,7 +5,7 @@
     <el-upload
       class="upload-demo"
       ref="upload"
-      action="https://localhost:8080/ShiroTest/admin/uploadToDB"
+      action="http://localhost:8080/ShiroTest/admin/uploadToDB"
       :on-change="handlePreview"
       :on-remove="handleRemove"
       :file-list="fileList"
@@ -67,7 +67,18 @@ export default {
   },
   methods: {
     submitUpload () {
-      this.$refs.upload.submit()
+      var self = this
+      this.axios({
+        method: 'post',
+        url: 'http://localhost:8080/ShiroTest/admin/uploadToDB',
+        param: self.preview
+      })
+      .then(function (response) {
+        console.log('success')
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     },
     handlePreview (file) {
       var rABS = true

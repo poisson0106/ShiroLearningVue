@@ -76,7 +76,6 @@
 </template>
 
 <script>
-// import bus from '@/router/bus.js'
 
 export default {
   data: function () {

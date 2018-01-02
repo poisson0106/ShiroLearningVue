@@ -5,7 +5,7 @@
     <el-upload
       class="upload-demo"
       ref="upload"
-      action="http://localhost:8080/ShiroTest/admin/uploadToDB"
+      action="/"
       :on-change="handlePreview"
       :on-remove="handleRemove"
       :file-list="fileList"
@@ -32,19 +32,19 @@
         :data="preview"
         style="width: 100%">
         <el-table-column 
-          prop="Name" 
+          prop="name" 
           label="Name" 
           width="180" />
         <el-table-column
-          prop="Price"
+          prop="price"
           label="Price"
           width="180" />
         <el-table-column
-          prop="Category"
+          prop="category"
           label="Category"
           width="180" />
         <el-table-column
-          prop="Amount"
+          prop="amount"
           label="Amount"
           width="180" />
         <el-table-column
@@ -71,7 +71,7 @@ export default {
       this.axios({
         method: 'post',
         url: 'http://localhost:8080/ShiroTest/admin/uploadToDB',
-        param: self.preview
+        data: self.preview
       })
       .then(function (response) {
         console.log('success')

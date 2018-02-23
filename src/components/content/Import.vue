@@ -71,13 +71,15 @@ export default {
       this.axios({
         method: 'post',
         url: 'http://localhost:8080/ShiroTest/admin/uploadToDB',
-        data: self.preview
+        data: self.preview,
+        headers: {'Authorization': this.$store.state.token}
       })
       .then(function (response) {
         console.log('success')
       })
       .catch(function (error) {
         console.log(error)
+        if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
       })
     },
     handlePreview (file) {

@@ -111,15 +111,17 @@ export default {
           { required: true, message: 'Please input password', trigger: 'blur' }
         ],
         rusername: [
-          { type: 'email', required: true, message: 'Please input email address', trigger: 'blur' }
+          {
+            type: 'email',
+            required: true,
+            message: 'Please input email address',
+            trigger: 'blur'
+          }
         ],
         rpassword: [
           { required: true, message: 'Please input password', trigger: 'blur' }
         ],
-        cpassword: [
-          { validator: passwordCheck, trigger: 'blur' }
-        ]
-
+        cpassword: [{ validator: passwordCheck, trigger: 'blur' }]
       },
       addr: ['@gmail.com', '@sina.com', '@163.com', '@outlook.com', '@qq.com'],
       isLoading: false,
@@ -129,14 +131,12 @@ export default {
   },
   methods: {
     onSubmit: function (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           var params = new URLSearchParams()
           params.append('username', this.loginform.username)
           params.append('password', this.loginform.password)
-          if (this.username === null || this.username === '') console.error('Username is empty')
-          else {
-            sessionStorage.username = this.username
+          if (this.username === null || this.username === '') { console.error('Username is empty') } else {
             let self = this
             this.isLoading = true
             this.axios({
@@ -144,18 +144,20 @@ export default {
               url: 'http://localhost:8080/ShiroTest/auth/login',
               data: params
             })
-            .then(function (response) {
-              self.isLoading = false
-              var tokenraw = response.data.token
-              tokenraw.password = ''
-              self.$store.commit('updateToken', {token: tokenraw})
-              // sessionStorage.setItem('jsessionid', response.data.jSessionId)
-              self.$router.push('/index')
-            })
-            .catch(function (error) {
-              self.isLoading = false
-              self.$message.error(error.message)
-            })
+              .then(function (response) {
+                self.isLoading = false
+                self.$store.commit('updateToken', {
+                  token: response.data.objData.token
+                })
+                self.$store.commit('updateUsername', {
+                  username: response.data.objData.username
+                })
+                self.$router.push('/index')
+              })
+              .catch(function (error) {
+                self.isLoading = false
+                self.$message.error(error.message)
+              })
           }
         } else {
           this.$message.error('submit error')
@@ -173,7 +175,7 @@ export default {
       } else {
         var tail = queryString.substring(queryString.indexOf('@'))
         if (tail.length > 1) {
-          addr = addr.filter((address) => {
+          addr = addr.filter(address => {
             var pattern = new RegExp('^' + tail)
             return pattern.exec(address)
           })
@@ -191,7 +193,7 @@ export default {
       this.regform.rusername = item
     },
     regSubmit: function (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           var params = new URLSearchParams()
           params.append('username', this.regform.rusername)
@@ -205,34 +207,32 @@ export default {
     resetForm: function (formName) {
       this.$refs[formName].resetFields()
     }
-
   }
 }
 </script>
 
 <style>
-body{
-  background-color: #eee
+body {
+  background-color: #eee;
 }
 
-.my-autocomplete {
-  li {
-    line-height: normal;
-    padding: 7px;
-    width: 500px;
+.my-autocomplete li {
+  line-height: normal;
+  padding: 7px;
+  width: 500px;
+}
 
-    .name {
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-    .addr {
-      font-size: 12px;
-      color: #b4b4b4;
-    }
+.my-autocomplete li .name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
-    .highlighted .addr {
-      color: #ddd;
-    }
-  }
+.my-autocomplete li .addr {
+  font-size: 12px;
+  color: #b4b4b4;
+}
+
+.my-autocomplete li .highlighted .addr {
+  color: #ddd;
 }
 </style>

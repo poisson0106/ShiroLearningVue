@@ -16,7 +16,8 @@
     "vuex": "^3.0.1",
     "axios": "0.16.2",
     "sockjs-client": "^1.1.4",
-    "xlsx": "^0.11.13"
+    "xlsx": "^0.11.13",
+    "stompjs": "^2.3.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

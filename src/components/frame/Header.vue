@@ -14,17 +14,25 @@
   </el-menu>
 
   <el-dialog
-    title="Expire"
-    :visible.sync="showExpire"
+    title="Authenication timeout. Please relogin"
+    :visible.sync="showReLogin"
     :close-on-click-modal = "false"
     :close-on-press-escape = "false"
     :show-close = "false"
     width="30%">
-    <span>Your session has expired. Please re-login to continue</span>
-    <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="relogin">Accept</el-button>
-    </span>
+    <el-form :model="reloginForm">
+      <el-form-item label="User name:" :label-width="formLabelWidth">
+        <el-input v-model="reloginForm.username" auto-complete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="Password" :label-width="formLabelWidth">
+        <el-input type="password" v-model="reloginForm.password" auto-complete="off"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="dialogFormVisible = false">Submit</el-button>
+    </div>
   </el-dialog>
+
 </div>
 </template>
 
@@ -36,27 +44,23 @@ export default {
     return {
       activeIndex: '1',
       intervalId: 0,
-      showExpire: false
+      showExpire: false,
+      reloginForm: {
+        username: this.$store.state.username,
+        password: ''
+      },
+      formLabelWidth: 300
     }
   },
   computed: {
     username: function () {
-      return this.$store.state.token.username
+      return this.$store.state.username
+    },
+    showReLogin: function () {
+      return this.$store.state.showReLogin
     }
   },
   created: function () {
-    // var sock = new SockJS('http://localhost:8080/ShiroTest/websocket', '', {
-    //   sessionId: function () {
-    //     var jsessionid = sessionStorage.getItem('jsessionid')
-    //     if (jsessionid !== null && jsessionid !== '') return jsessionid
-    //   }
-    // })
-    // sock.onmessage = function (response) {
-    //   var msg = response.data
-    //   if (msg === 'session timeout') {
-    //     console.error('Timeout!')
-    //   }
-    // }
     var self = this
     this.intervalId = setInterval(() => {
       var current = new Date()
@@ -68,30 +72,16 @@ export default {
       if (lasted >= 3 && lasted < 5) {
         self.$notify({
           title: 'Warning!',
-          message: 'Your session will be expired soon. If you are no longer to use it. Please log out.',
+          message: 'Your token will be expired soon. If you are no longer to use it. Please log out.',
           type: 'warning',
           duration: 5000
         })
-      } else if (lasted >= 5) {
-        self.$store.commit('updateToken', {token: []})
-        self.showExpire = true
       }
     }, 60000)
   },
   methods: {
     relogin () {
-      var self = this
-      this.axios({
-        method: 'get',
-        url: 'http://localhost:8080/ShiroTest/auth/logout'
-      })
-      .then(function () {
-        self.$store.state.token = []
-        self.$router.push('/')
-      })
-      .catch(function (error) {
-        console.error(error)
-      })
+      // TODO complete relogin method
     },
     handleNaviTarget (target) {
       var self = this
@@ -99,14 +89,16 @@ export default {
       else {
         this.axios({
           method: 'get',
-          url: 'http://localhost:8080/ShiroTest/auth/logout'
+          url: 'http://localhost:8080/ShiroTest/auth/logout',
+          headers: {'Authorization': this.$store.state.token}
         })
         .then(function () {
-          self.$store.state.token = []
+          self.$store.state.token = ''
           self.$router.push('/')
         })
         .catch(function (error) {
           console.error(error)
+          if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
         })
       }
     }

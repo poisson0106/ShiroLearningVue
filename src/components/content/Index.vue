@@ -28,13 +28,15 @@ export default {
     var self = this
     this.axios({
       method: 'get',
-      url: 'http://localhost:8080/ShiroTest/product/recommended'
+      url: 'http://localhost:8080/ShiroTest/product/recommended',
+      headers: {'Authorization': this.$store.state.token}
     })
     .then(function (response) {
       self.rproducts = response.data
     })
     .catch(function (error) {
       console.error(error)
+      if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
     })
   },
   methods: {

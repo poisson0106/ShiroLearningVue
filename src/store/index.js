@@ -7,7 +7,10 @@ const store = new Vuex.Store({
   state: {
     lastTouch: '',
     history: [],
-    token: []
+    token: '',
+    username: '',
+    showReLogin: false,
+    interuptedUrl: ''
   },
   mutations: {
     updateTouchTime (state) {
@@ -18,6 +21,15 @@ const store = new Vuex.Store({
     },
     updateToken (state, payload) {
       state.token = payload.token
+    },
+    updateUsername (state, payload) {
+      state.username = payload.username
+    },
+    updateShowReLogin (state, payload) {
+      state.showReLogin = payload.showReLogin
+    },
+    updateInteruptedUrl (state, payload) {
+      state.interuptedUrl = payload.interuptedUrl
     }
   }
 })

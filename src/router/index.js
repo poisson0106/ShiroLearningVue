@@ -68,7 +68,7 @@ router.beforeEach((to, from, next) => {
   }, this)
   if (isNeedAuth) {
     var token = store.state.token
-    if (token !== null && token !== undefined) next()
+    if (token !== null && token !== undefined && token !== '') next()
     else next('/')
   } else next()
 })

@@ -34,20 +34,22 @@ export default {
   },
   beforeCreate: function () {
     var params = new URLSearchParams()
-    var usr = this.$store.state.token.username
+    var usr = this.$store.state.username
     params.append('username', usr)
     var self = this
     this.axios({
       method: 'post',
       url: 'http://localhost:8080/ShiroTest/index/profile',
-      data: params
+      data: params,
+      headers: {'Authorization': this.$store.state.token}
     })
     .then(function (response) {
       self.profile.rolesMap = response.data
-      self.profile.username = self.$store.state.token.username
+      self.profile.username = self.$store.state.username
     })
     .catch(function (error) {
       console.error(error)
+      if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
     })
   }
 }

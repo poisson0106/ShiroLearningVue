@@ -38,7 +38,8 @@ export default {
     this.loadMenu = true
     this.axios({
       method: 'get',
-      url: 'http://localhost:8080/ShiroTest/index/getMainMenu'
+      url: 'http://localhost:8080/ShiroTest/index/getMainMenu',
+      headers: {'Authorization': this.$store.state.token}
     })
     .then(function (response) {
       console.log(response.data)
@@ -48,6 +49,7 @@ export default {
     .catch(function (error) {
       console.error(error)
       self.loadMenu = false
+      if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
     })
   },
   methods: {
@@ -61,7 +63,8 @@ export default {
         this.axios({
           method: 'post',
           url: 'http://localhost:8080/ShiroTest/index/getSubMenu',
-          data: params
+          data: params,
+          headers: {'Authorization': this.$store.state.token}
         })
         .then(function (response) {
           var sub = response.data
@@ -75,6 +78,7 @@ export default {
         })
         .catch(function (error) {
           console.error(error)
+          if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
         })
       } else {
         if (subMenus !== null && subMenus !== '') this.items = JSON.parse(subMenus)

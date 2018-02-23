@@ -33,7 +33,7 @@
         <el-tag size="mini" v-for="tag in tags" :key="tag">{{tag}}</el-tag>
         <!-- <span class="bg-info" v-for="tag in tags" :key="tag" style="margin-right:5px">{{tag}}</span> -->
       </el-col>
-      <hr></hr>
+      <hr />
       <p>Price : <span class="text-danger">{{product.price}}</span></p>
       <p>Amount: <el-input-number size="small" v-model="count"></el-input-number></p>
       <el-col :span="24" style="padding-left:0px">
@@ -94,7 +94,8 @@ export default {
     var self = this
     this.axios({
       method: 'get',
-      url: 'http://localhost:8080/ShiroTest/product/' + self.$route.params.id
+      url: 'http://localhost:8080/ShiroTest/product/' + self.$route.params.id,
+      headers: {'Authorization': this.$store.state.token}
     })
     .then(function (response) {
       var data = response.data
@@ -110,6 +111,7 @@ export default {
     .catch(function (error) {
       console.error(error)
       self.loadDetail = false
+      if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
     })
   },
   watch: {
@@ -117,7 +119,8 @@ export default {
       var self = this
       this.axios({
         method: 'get',
-        url: 'http://localhost:8080/ShiroTest/product/' + self.$route.params.id
+        url: 'http://localhost:8080/ShiroTest/product/' + self.$route.params.id,
+        headers: {'Authorization': this.$store.state.token}
       })
       .then(function (response) {
         var data = response.data
@@ -131,6 +134,7 @@ export default {
       })
       .catch(function (error) {
         console.error(error)
+        if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
       })
     }
   },
@@ -144,7 +148,8 @@ export default {
         this.axios({
           method: 'post',
           url: 'http://localhost:8080/ShiroTest/comment/byProduct',
-          data: params
+          data: params,
+          headers: {'Authorization': this.$store.state.token}
         })
         .then(function (response) {
           var comments = response.data
@@ -155,6 +160,7 @@ export default {
         })
         .catch(function (error) {
           console.error(error)
+          if (error.response.status === 401) { self.$store.commit('updateShowReLogin', {showReLogin: true}) }
         })
       }
     }
